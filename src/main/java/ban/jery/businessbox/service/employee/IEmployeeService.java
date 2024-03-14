@@ -16,4 +16,6 @@ public interface IEmployeeService {
     Employee deleteEmployee(Long id) throws EntityNotFoundException;
 
     List<Employee> getEmployeeByLastname(String lastname) throws EntityNotFoundException;
+
+    List<Employee> getAllEmployees() throws Exception;
 }

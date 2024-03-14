@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "employees")
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
@@ -30,6 +29,7 @@ public class Employee {
     private String phoneNumber;
 
     @Email
+    @Column(unique = true)
     private String email;
 
     @Column(unique = true)

@@ -100,4 +100,20 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
         return employees;
     }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        List<Employee> employees = new ArrayList<>();
+
+        try {
+            employees = repo.findAll();
+            log.info("Employees fetched successfully.");
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
+        }
+
+        return employees;
+    }
 }
