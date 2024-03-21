@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
             employee = repo.save(EmployeeMapper.mapToEmployee(dto));
 
             if (employee == null) throw new Exception("Error - Insert employee");
-            log.info("insert success - id: " + employee.getId());
+            log.info("employee with id: " + employee.getId() + " inserted successfully.");
 
         } catch (Exception e) {
             log.error(e.getMessage());
