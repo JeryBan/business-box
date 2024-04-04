@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class Employee extends AbstractEntity {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

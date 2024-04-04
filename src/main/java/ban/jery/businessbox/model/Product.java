@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Product extends AbstractEntity {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
