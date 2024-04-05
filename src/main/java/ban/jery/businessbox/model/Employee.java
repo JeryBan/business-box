@@ -32,6 +32,5 @@ public class Employee {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
     private String filesPath;
 }
