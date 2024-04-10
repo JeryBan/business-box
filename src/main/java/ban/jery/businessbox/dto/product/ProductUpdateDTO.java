@@ -16,7 +16,8 @@ public class ProductUpdateDTO extends BaseDTO {
     @NotNull(message = "Name of the product is required.")
     private String name;
 
+    private String category;
     private String description;
-    private Double quantity;
-    private Double price;
+    private Float quantity;
+    private Float price;
 }

@@ -23,7 +23,8 @@ public class Product {
     @Column(unique = true, nullable = false)
     private String name;
 
+    private String category;
     private String description;
-    private Double quantity;
-    private Double price;
+    private Float quantity;
+    private Float price;
 }

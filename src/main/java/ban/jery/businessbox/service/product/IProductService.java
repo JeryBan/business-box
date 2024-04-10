@@ -15,7 +15,7 @@ public interface IProductService {
 
     Product deleteProduct(Long id) throws EntityNotFoundException;
 
-    List<Product> getProductByNameStartingWith(String name) throws EntityNotFoundException;
+    List<Product> getProductByName(String name) throws EntityNotFoundException;
 
     List<Product> getAllProducts() throws Exception;
 }

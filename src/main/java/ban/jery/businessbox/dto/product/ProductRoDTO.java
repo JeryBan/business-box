@@ -13,13 +13,15 @@ import lombok.Setter;
 public class ProductRoDTO extends BaseDTO {
 
     private String name;
+    private String category;
     private String description;
-    private Double quantity;
-    private Double price;
+    private Float quantity;
+    private Float price;
 
-    public ProductRoDTO(Long id, String name, String description, Double quantity, Double price) {
+    public ProductRoDTO(Long id, String name, String category, String description, Float quantity, Float price) {
         setId(id);
         this.name = name;
+        this.category = category;
         this.description = description;
         this.quantity = quantity;
         this.price = price;

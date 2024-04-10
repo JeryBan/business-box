@@ -71,6 +71,8 @@ public class ProductServiceImpl implements IProductService {
             product = repo.findById(id);
 
             if (product.isEmpty()) throw new EntityNotFoundException("Product not found - id: " + id);
+
+            repo.deleteById(id);
             log.info("product with id: " + id + " deleted successfully.");
 
         } catch (EntityNotFoundException e) {
@@ -81,7 +83,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getProductByNameStartingWith(String name) throws EntityNotFoundException {
+    public List<Product> getProductByName(String name) throws EntityNotFoundException {
         List<Product> products = new ArrayList<>();
 
         try {
