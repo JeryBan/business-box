@@ -1,7 +1,7 @@
 package ban.jery.businessbox.dto.employee;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -13,7 +13,7 @@ public class EmployeeInsertDTO {
 
     private String firstname;
 
-    @NotNull(message = "Lastname is required")
+    @NotBlank(message = "Lastname is required.")
     private String lastname;
 
     @Size(min = 10, max = 10, message = "Phone Number must be 10 digits.")
