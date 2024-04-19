@@ -41,12 +41,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/users/login", "/users/register").permitAll()
-                        .anyRequest().authenticated())
-
-                .httpBasic(Customizer.withDefaults());
-
-
-
+                        .anyRequest().authenticated());
 
         return http.build();
     }

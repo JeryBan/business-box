@@ -1,33 +1,33 @@
 package ban.jery.businessbox.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import ban.jery.businessbox.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@AllArgsConstructor
 public class AuthProvider {
 
-    private final CustomUserDetailsService userDetails;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public AuthProvider(CustomUserDetailsService userDetails) {
-        this.userDetails = userDetails;
-    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        provider.setUserDetailsService(userDetails);
-        provider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
 
-        return provider;
+        return authProvider;
     }
 
     @Bean
@@ -35,6 +35,11 @@ public class AuthProvider {
         return config.getAuthenticationManager();
     }
 
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> userRepository.findUserByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
