@@ -1,7 +1,6 @@
 package ban.jery.businessbox.service.user;
 
 import ban.jery.businessbox.dto.user.UserInsertDTO;
-import ban.jery.businessbox.dto.user.UserUpdateDTO;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.User;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,11 +18,6 @@ public interface IUserService {
 
     User findUserByEmail(String email) throws EntityNotFoundException;
 
-    void addBusinessToUser(Long id) throws EntityNotFoundException;
-
-    void removeBusinessFromUser(Long id) throws EntityNotFoundException;
-
-    Set<Business> getUserBusinesses() throws Exception;
 
 
 }

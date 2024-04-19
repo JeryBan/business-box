@@ -44,10 +44,9 @@ public class User implements UserDetails {
     private Set<Business> businesses;
 
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null; // List.of(new SimpleGrantedAuthority(role.name()));
+        return null; // List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override

@@ -70,6 +70,19 @@ public class UserRestController {
         }
     }
 
+    @DeleteMapping("/{id")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+
+        try {
+            User user = userService.deleteUser(id);
+
+            return ResponseEntity.ok().build();
+
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserInsertDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -127,5 +140,11 @@ public class UserRestController {
        } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUser(@RequestBody String token) {
+        jwtService.invalidateToken(token);
+        return ResponseEntity.ok("logout successful");
     }
 }

@@ -87,21 +87,21 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User deleteUser(Long id) throws EntityNotFoundException {
-        return null;
+        Optional<User> user;
+
+        try {
+            user = repo.findById(id);
+            if (user.isEmpty()) throw new EntityNotFoundException("User not found - id: " + id);
+
+            repo.deleteById(id);
+            log.info("User, id: " + id + " deleted");
+
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            throw e;
+        }
+        return user.orElseThrow();
     }
 
-    @Override
-    public void addBusinessToUser(Long id) throws EntityNotFoundException {
 
-    }
-
-    @Override
-    public void removeBusinessFromUser(Long id) throws EntityNotFoundException {
-
-    }
-
-    @Override
-    public Set<Business> getUserBusinesses() throws Exception {
-        return null;
-    }
 }

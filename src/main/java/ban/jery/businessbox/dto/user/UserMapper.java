@@ -12,10 +12,6 @@ public class UserMapper {
         return new User(null, dto.getEmail(), dto.getPassword(), new HashSet<>());
     }
 
-    public static User mapToUser(UserUpdateDTO dto) {
-        return new User(dto.getId(), dto.getEmail(), dto.getPassword(), dto.getBusinesses());
-    }
-
     public static UserRoDTO mapToRoUser(User user) {
         return new UserRoDTO(user.getId(), user.getEmail(), user.getPassword(), user.getBusinesses());
     }
