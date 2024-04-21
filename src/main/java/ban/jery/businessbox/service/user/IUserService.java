@@ -1,5 +1,6 @@
 package ban.jery.businessbox.service.user;
 
+import ban.jery.businessbox.dto.business.BusinessInsertDTO;
 import ban.jery.businessbox.dto.user.UserInsertDTO;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.User;
@@ -7,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 public interface IUserService {
 
@@ -17,6 +19,7 @@ public interface IUserService {
     List<User> getAllUsers() throws Exception;
 
     User findUserByEmail(String email) throws EntityNotFoundException;
+
 
 
 

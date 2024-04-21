@@ -70,7 +70,7 @@ public class UserRestController {
         }
     }
 
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
 
         try {
@@ -97,12 +97,6 @@ public class UserRestController {
         try {
             dto.setPassword(passwordEncoder.encode(dto.getPassword()));
             User user = userService.insertUser(dto);
-
-//            UserRoDTO roUser = UserMapper.mapToRoUser(user);
-//            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-//                    .path("id")
-//                    .buildAndExpand(roUser.getId())
-//                    .toUri();
 
             String jwtToken = jwtService.generateToken(user);
             return ResponseEntity.ok(Collections.singletonMap("access_token", jwtToken));

@@ -43,7 +43,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Business> businesses;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null; // List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

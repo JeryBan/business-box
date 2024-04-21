@@ -1,10 +1,6 @@
 package ban.jery.businessbox.dto.business;
 
 import ban.jery.businessbox.dto.BaseDTO;
-import ban.jery.businessbox.model.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,11 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BusinessUpdateDTO extends BaseDTO {
+public class BusinessRoDTO extends BaseDTO {
 
-    @NotNull
-    @Column(nullable = false)
+    private Long id;
+
+    @NotNull(message = "Business name is required")
     private String name;
-
 
 }

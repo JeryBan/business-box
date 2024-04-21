@@ -7,7 +7,6 @@ import java.util.HashSet;
 
 @UtilityClass
 public class UserMapper {
-
     public static User mapToUser(UserInsertDTO dto) {
         return new User(null, dto.getEmail(), dto.getPassword(), new HashSet<>());
     }
