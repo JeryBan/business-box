@@ -3,11 +3,13 @@ package ban.jery.businessbox.service.employee;
 import ban.jery.businessbox.dto.employee.EmployeeInsertDTO;
 import ban.jery.businessbox.dto.employee.EmployeeMapper;
 import ban.jery.businessbox.dto.employee.EmployeeUpdateDTO;
+import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.Employee;
+import ban.jery.businessbox.repositories.BusinessRepository;
 import ban.jery.businessbox.repositories.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,46 +19,56 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class EmployeeServiceImpl implements IEmployeeService {
 
-    private final EmployeeRepository repo;
-
-    @Autowired
-    public EmployeeServiceImpl(EmployeeRepository repo) {
-        this.repo = repo;
-    }
-
+    private final EmployeeRepository employeeRepo;
+    private final BusinessRepository businessRepo;
 
     @Override
     @Transactional
-    public Employee insertEmployee(EmployeeInsertDTO dto) throws Exception {
-        Employee employee;
+    public Employee insertEmployeeToBusiness(EmployeeInsertDTO dto) throws EntityNotFoundException {
 
         try {
-            employee = repo.save(EmployeeMapper.mapToEmployee(dto));
+            Business business = businessRepo.findById(dto.getBusiness().getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Business not found"));
 
-            if (employee == null) throw new Exception("Error - Insert employee");
-            log.info("employee with id: " + employee.getId() + " inserted successfully.");
+            Employee employee = EmployeeMapper.mapToEmployee(dto, business);
+            employee = employeeRepo.save(employee);
+            log.info("Employee with id: " + employee.getId() + " inserted successfully.");
+
+            business.getEmployees().add(employee);
+            log.info("Employee: " + employee.getLastname() + " added to Business: " + business.getName());
+
+            return employee;
 
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
         }
-        return employee;
     }
 
     @Override
     @Transactional
     public Employee updateEmployee(EmployeeUpdateDTO dto) throws EntityNotFoundException {
-        Optional<Employee> employee;
         Employee newEmployee;
 
         try {
-            employee = repo.findById(dto.getId());
-            if (employee.isEmpty()) throw new EntityNotFoundException("Employee not found - id: " + dto.getId());
+            Business business = businessRepo.findById(dto.getBusiness().getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Business for employee not found or mismatch"));
 
-            newEmployee = repo.save(EmployeeMapper.mapToEmployee(dto));
-            log.info("Update success - id: " + dto.getId());
+            Employee oldEmployee = employeeRepo.findById(dto.getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Employee not found - id: " + dto.getId()));
+
+            if (!oldEmployee.getBusiness().getId().equals(business.getId())) {
+                throw new EntityNotFoundException("Business mismatch for employee - id: " + dto.getId());
+            }
+
+            business.getEmployees().remove(oldEmployee);
+            newEmployee = employeeRepo.save(EmployeeMapper.mapToEmployee(dto));
+            business.getEmployees().add(newEmployee);
+
+            log.info("Employee with id: " + newEmployee.getId() + " updated successfully.");
 
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
@@ -68,20 +80,24 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     @Transactional
     public Employee deleteEmployee(Long id) throws EntityNotFoundException {
-        Optional<Employee> employee;
+        Business business;
 
         try {
-            employee = repo.findById(id);
-            if (employee.isEmpty()) throw new EntityNotFoundException("Employee not found - id: " + id);
+            Employee employee = employeeRepo.findById(id)
+                    .orElseThrow( () -> new EntityNotFoundException("Employee not found - id: " + id));
 
-            repo.deleteById(id);
-            log.info("Employ, id: " + id + " deleted");
+            business = employee.getBusiness();
+            business.getEmployees().remove(employee);
+
+            employeeRepo.deleteById(id);
+            log.info("Employ with id: " + id + " deleted successfully.");
+
+            return employee;
 
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }
-        return employee.orElseThrow();
     }
 
     @Override
@@ -89,8 +105,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
         List<Employee> employees = new ArrayList<>();
 
         try {
-            employees = repo.findByLastnameStartingWith(lastname);
-            if (employees.isEmpty()) throw new EntityNotFoundException("Employee not found - lastname: " + lastname);
+            employees = employeeRepo.findByLastnameStartingWith(lastname);
+            if (employees.isEmpty()) throw new EntityNotFoundException("No employees found.");
 
             log.info("Employee(s) found");
 
@@ -102,14 +118,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        List<Employee> employees = new ArrayList<>();
+    public List<Employee> getAllEmployees(Long businessId) throws EntityNotFoundException {
+        List<Employee> employees;
 
         try {
-            employees = repo.findAll();
+            Business business = businessRepo.findById(businessId)
+                    .orElseThrow( () -> new EntityNotFoundException("Business not found"));
+
+            employees = new ArrayList<>(business.getEmployees());
             log.info("Employees fetched successfully.");
 
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }

@@ -3,11 +3,13 @@ package ban.jery.businessbox.service.product;
 import ban.jery.businessbox.dto.product.ProductInsertDTO;
 import ban.jery.businessbox.dto.product.ProductMapper;
 import ban.jery.businessbox.dto.product.ProductUpdateDTO;
+import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.Product;
+import ban.jery.businessbox.repositories.BusinessRepository;
 import ban.jery.businessbox.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,69 +19,85 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ProductServiceImpl implements IProductService {
 
-    private final ProductRepository repo;
-
-    @Autowired
-    public ProductServiceImpl(ProductRepository repo) {
-        this.repo = repo;
-    }
+    private final ProductRepository productRepo;
+    private final BusinessRepository businessRepo;
 
     @Override
     @Transactional
-    public Product insertProduct(ProductInsertDTO dto) throws Exception {
-        Product product;
+    public Product insertProductToBusiness(ProductInsertDTO dto) throws EntityNotFoundException {
 
         try {
-            product = repo.save(ProductMapper.mapToProduct(dto));
+            Business business = businessRepo.findById(dto.getBusiness().getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Business not found"));
 
-            if (product == null) throw new Exception("error - insert product");
-            log.info("product with id: " + product.getId() + " inserted successfully.");
+            Product product = ProductMapper.mapToProduct(dto, business);
+            product = productRepo.save(product);
+            log.info("Product with id: " + product.getId() + " inserted successfully.");
 
-        } catch (Exception e) {
+            business.getProducts().add(product);
+            log.info("Product: " + product.getName() + " added to Business: " + business.getName());
+
+            return product;
+
+        } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }
-        return product;
     }
 
     @Override
     @Transactional
     public Product updateProduct(ProductUpdateDTO dto) throws EntityNotFoundException {
-        Product product;
+        Product newProduct;
 
         try {
-            product = repo.save(ProductMapper.mapToProduct(dto));
+            Business business = businessRepo.findById(dto.getBusiness().getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Business for product not found or mismatch"));
 
-            if (product == null) throw new EntityNotFoundException("Product not found - id: " + dto.getId());
-            log.info("product with id: " + product.getId() + " updated successfully.");
+            Product oldProduct = productRepo.findById(dto.getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Product not found - id: " + dto.getId()));
+
+            if (!oldProduct.getBusiness().getId().equals(business.getId())) {
+                throw new EntityNotFoundException("Business mismatch for employee - id: " + dto.getId());
+            }
+
+           business.getProducts().remove(oldProduct);
+            newProduct = productRepo.save(ProductMapper.mapToProduct(dto));
+            business.getProducts().add(newProduct);
+
+            log.info("Product with id: " + newProduct.getId() + " updated successfully.");
 
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }
-        return product;
+        return newProduct;
     }
 
     @Override
     @Transactional
     public Product deleteProduct(Long id) throws EntityNotFoundException {
-        Optional<Product> product;
+        Business business;
 
         try {
-            product = repo.findById(id);
+            Product product = productRepo.findById(id)
+                    .orElseThrow( () -> new EntityNotFoundException("Product not found - id: " + id));
 
-            if (product.isEmpty()) throw new EntityNotFoundException("Product not found - id: " + id);
+            business = product.getBusiness();
+            business.getProducts().remove(product);
 
-            repo.deleteById(id);
-            log.info("product with id: " + id + " deleted successfully.");
+            productRepo.deleteById(id);
+            log.info("Product with id: " + id + " deleted successfully.");
+
+            return product;
 
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }
-        return product.orElseThrow();
     }
 
     @Override
@@ -87,9 +105,9 @@ public class ProductServiceImpl implements IProductService {
         List<Product> products = new ArrayList<>();
 
         try {
-            products = repo.findProductByNameStartingWith(name);
+            products = productRepo.findProductByNameStartingWith(name);
+            if (products.isEmpty()) throw new EntityNotFoundException("No products found.");
 
-            if (products.isEmpty()) throw new EntityNotFoundException("No products found");
             log.info("Product(s) found.");
 
         } catch (EntityNotFoundException e) {
@@ -100,14 +118,17 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() throws Exception {
+    public List<Product> getAllProducts(Long businessId) throws EntityNotFoundException {
         List<Product> products;
 
         try {
-            products = repo.findAll();
+            Business business = businessRepo.findById(businessId)
+                    .orElseThrow( () -> new EntityNotFoundException("Business not found"));
+
+            products = new ArrayList<>(business.getProducts());
             log.info("Products fetched successfully.");
 
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }

@@ -8,6 +8,7 @@ import ban.jery.businessbox.model.Product;
 import ban.jery.businessbox.service.product.IProductService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +23,19 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/products")
 public class ProductRestController {
 
     private final IProductService service;
 
-    @Autowired
-    public ProductRestController(IProductService service) {
-        this.service = service;
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<List<ProductRoDTO>> getAllProducts(){
+    @GetMapping("/{businessId}")
+    public ResponseEntity<List<ProductRoDTO>> getAllProducts(@PathVariable("businessId") Long businessId){
         List<Product> products;
         List<ProductRoDTO> roProducts = new ArrayList<>();
 
         try {
-            products = service.getAllProducts();
+            products = service.getAllProducts(businessId);
             for (Product product : products) {
                 roProducts.add(ProductMapper.mapToRoProduct(product));
             }
@@ -50,7 +47,7 @@ public class ProductRestController {
         }
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/search/{name}")
     public ResponseEntity<List<ProductRoDTO>> getProductByName(@PathVariable("name") String name) {
         List<Product> products;
         List<ProductRoDTO> roProducts = new ArrayList<>();
@@ -69,7 +66,7 @@ public class ProductRestController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> insertProduct(@Valid @RequestBody ProductInsertDTO dto, BindingResult bindingResult) {
+    public ResponseEntity<?> insertProductToBusiness(@Valid @RequestBody ProductInsertDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = new ArrayList<>();
 
@@ -80,7 +77,7 @@ public class ProductRestController {
         }
 
         try {
-            Product product = service.insertProduct(dto);
+            Product product = service.insertProductToBusiness(dto);
             ProductRoDTO roProduct = ProductMapper.mapToRoProduct(product);
 
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()

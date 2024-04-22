@@ -4,11 +4,13 @@ import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.User;
 import lombok.experimental.UtilityClass;
 
+import java.util.HashSet;
+
 @UtilityClass
 public class BusinessMapper {
 
     public static Business mapToBusiness(BusinessInsertDTO dto, User user) {
-        return new Business(null, dto.getName(), user);
+        return new Business(null, dto.getName(), user, new HashSet<>(), new HashSet<>());
     }
 
     public static BusinessRoDTO mapToRoBusiness(Business business) {

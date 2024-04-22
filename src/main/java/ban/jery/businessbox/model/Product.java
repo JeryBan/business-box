@@ -23,8 +23,24 @@ public class Product {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @NotNull
+    @Column(nullable = false)
     private String category;
+
     private String description;
     private Float quantity;
     private Float price;
+
+    @ManyToOne
+    @JoinColumn(name = "business_id", referencedColumnName = "id")
+    private Business business;
+
+    public Product(Long id, String name, String category, String description, Float quantity, Float price) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

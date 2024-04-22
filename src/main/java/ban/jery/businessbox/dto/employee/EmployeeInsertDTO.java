@@ -1,5 +1,6 @@
 package ban.jery.businessbox.dto.employee;
 
+import ban.jery.businessbox.model.Business;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,4 +24,5 @@ public class EmployeeInsertDTO {
     private String email;
 
     private String filesPath;
+    private Business business;
 }

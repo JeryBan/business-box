@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,15 +40,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User findUserByEmail(String email) {
-        Optional<User> user;
 
         try {
-            user = userRepo.findUserByEmail(email);
+            User user = userRepo.findUserByEmail(email)
+                    .orElseThrow( () -> new UsernameNotFoundException("User not found"));
 
-            if (user.isEmpty()) throw new EntityNotFoundException();
             log.info("User with email: " + email + " found.");
-
-            return user.get();
+            return user;
 
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());

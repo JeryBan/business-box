@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "businesses")
 @NoArgsConstructor
@@ -26,4 +29,13 @@ public class Business {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @OneToMany(mappedBy = "business")
+    private Set<Employee> employees;
+
+    @OneToMany(mappedBy = "business")
+    private Set<Product> products;
+
+
+
 }

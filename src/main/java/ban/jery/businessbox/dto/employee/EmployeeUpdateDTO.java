@@ -1,14 +1,14 @@
 package ban.jery.businessbox.dto.employee;
 
 import ban.jery.businessbox.dto.BaseDTO;
+import ban.jery.businessbox.model.Business;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class EmployeeUpdateDTO extends BaseDTO {
 
     private String firstname;
 
-    @NotNull(message = "Lastname is required")
+    @NotBlank(message = "Lastname is required")
     private String lastname;
 
     @Size(min = 10, max = 10, message = "Phone Number must be 10 digits.")
@@ -28,5 +28,6 @@ public class EmployeeUpdateDTO extends BaseDTO {
     private String email;
 
     private String filesPath;
+    private Business business;
 
 }

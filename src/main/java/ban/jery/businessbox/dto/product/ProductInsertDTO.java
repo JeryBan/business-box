@@ -1,6 +1,7 @@
 package ban.jery.businessbox.dto.product;
 
-import jakarta.validation.constraints.NotNull;
+import ban.jery.businessbox.model.Business;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +13,14 @@ import lombok.Setter;
 @Setter
 public class ProductInsertDTO {
 
-    @NotNull(message = "Name of the product is required.")
+    @NotBlank(message = "Product name is required.")
     private String name;
 
+    @NotBlank(message = "Product category is required.")
     private String category;
+
     private String description;
     private Float quantity;
     private Float price;
+    private Business business;
 }

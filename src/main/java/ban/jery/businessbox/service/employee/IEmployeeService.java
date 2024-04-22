@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IEmployeeService {
 
-    Employee insertEmployee(EmployeeInsertDTO dto) throws Exception;
+    Employee insertEmployeeToBusiness(EmployeeInsertDTO dto) throws EntityNotFoundException;
 
     Employee updateEmployee(EmployeeUpdateDTO dto) throws EntityNotFoundException;
 
@@ -17,5 +17,5 @@ public interface IEmployeeService {
 
     List<Employee> getEmployeeByLastname(String lastname) throws EntityNotFoundException;
 
-    List<Employee> getAllEmployees() throws Exception;
+    List<Employee> getAllEmployees(Long businessId) throws EntityNotFoundException;
 }

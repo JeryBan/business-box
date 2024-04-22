@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IProductService {
 
-    Product insertProduct(ProductInsertDTO dto) throws Exception;
+    Product insertProductToBusiness(ProductInsertDTO dto) throws EntityNotFoundException;
 
     Product updateProduct(ProductUpdateDTO dto) throws EntityNotFoundException;
 
@@ -17,5 +17,5 @@ public interface IProductService {
 
     List<Product> getProductByName(String name) throws EntityNotFoundException;
 
-    List<Product> getAllProducts() throws Exception;
+    List<Product> getAllProducts(Long businessId) throws EntityNotFoundException;
 }

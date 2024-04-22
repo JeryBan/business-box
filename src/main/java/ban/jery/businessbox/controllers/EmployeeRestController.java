@@ -1,13 +1,11 @@
 package ban.jery.businessbox.controllers;
 
-import ban.jery.businessbox.dto.employee.EmployeeInsertDTO;
-import ban.jery.businessbox.dto.employee.EmployeeMapper;
-import ban.jery.businessbox.dto.employee.EmployeeRoDTO;
-import ban.jery.businessbox.dto.employee.EmployeeUpdateDTO;
+import ban.jery.businessbox.dto.employee.*;
 import ban.jery.businessbox.model.Employee;
 import ban.jery.businessbox.service.employee.IEmployeeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +18,19 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/employees")
 public class EmployeeRestController {
 
     private final IEmployeeService service;
 
-    @Autowired
-    public EmployeeRestController(IEmployeeService service) {
-        this.service = service;
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<List<EmployeeRoDTO>> getAllEmployees() {
+    @GetMapping("/{businessId}")
+    public ResponseEntity<List<EmployeeRoDTO>> getAllEmployees(@PathVariable("businessId") Long businessId) {
         List<Employee>  employees;
         List<EmployeeRoDTO> roEmployees = new ArrayList<>();
 
         try {
-            employees = service.getAllEmployees();
+            employees = service.getAllEmployees(businessId);
             for (Employee employee : employees) {
                 roEmployees.add(EmployeeMapper.mapToRoEmployee(employee));
             }
@@ -48,7 +42,7 @@ public class EmployeeRestController {
         }
     }
 
-    @GetMapping("/{lastname}")
+    @GetMapping("/search/{lastname}")
     public ResponseEntity<List<EmployeeRoDTO>> getEmployeeByLastname(@PathVariable("lastname") String lastname) {
         List<Employee> employees;
         List<EmployeeRoDTO> roEmployees = new ArrayList<>();
@@ -67,7 +61,7 @@ public class EmployeeRestController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> insertEmployee(@Valid @RequestBody EmployeeInsertDTO dto, BindingResult bindingResult) {
+    public ResponseEntity<?> addEmployeeToBusiness(@Valid @RequestBody EmployeeInsertDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = new ArrayList<>();
 
@@ -78,7 +72,7 @@ public class EmployeeRestController {
         }
 
         try {
-            Employee employee = service.insertEmployee(dto);
+            Employee employee = service.insertEmployeeToBusiness(dto);
             EmployeeRoDTO roEmployee = EmployeeMapper.mapToRoEmployee(employee);
 
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
