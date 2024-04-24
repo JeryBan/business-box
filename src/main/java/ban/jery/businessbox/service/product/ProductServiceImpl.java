@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -102,7 +101,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> getProductByName(String name) throws EntityNotFoundException {
-        List<Product> products = new ArrayList<>();
+        List<Product> products;
 
         try {
             products = productRepo.findProductByNameStartingWith(name);

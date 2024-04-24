@@ -6,16 +6,14 @@ import ban.jery.businessbox.service.employee.IEmployeeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.*;
+
 
 @RestController
 @AllArgsConstructor
@@ -61,15 +59,7 @@ public class EmployeeRestController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> addEmployeeToBusiness(@Valid @RequestBody EmployeeInsertDTO dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError er : bindingResult.getFieldErrors()) {
-                errors.add(er.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<EmployeeRoDTO> addEmployeeToBusiness(@Valid @RequestBody EmployeeInsertDTO dto) {
 
         try {
             Employee employee = service.insertEmployeeToBusiness(dto);
@@ -88,18 +78,9 @@ public class EmployeeRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id, @Valid @RequestBody EmployeeUpdateDTO dto, BindingResult bindingResult) {
-        if (!Objects.equals(id, dto.getId())) {
+    public ResponseEntity<EmployeeRoDTO> updateEmployee(@PathVariable("id") Long id, @Valid @RequestBody EmployeeUpdateDTO dto) {
+        if (!id.equals(dto.getId())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError er : bindingResult.getFieldErrors()) {
-                errors.add(er.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
         }
 
         try {

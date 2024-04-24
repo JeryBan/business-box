@@ -16,17 +16,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.*;
 
 @RestController
 @RequestMapping("/users")
-@AllArgsConstructor // Autowired
+@AllArgsConstructor
 public class UserRestController {
 
     private final IUserService userService;
@@ -84,15 +80,7 @@ public class UserRestController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserInsertDTO dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError er : bindingResult.getFieldErrors()) {
-                errors.add(er.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<Map<String, String>> registerUser(@Valid @RequestBody UserInsertDTO dto) {
 
         try {
             dto.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -109,15 +97,7 @@ public class UserRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@Valid @RequestBody UserInsertDTO loginDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError er : bindingResult.getFieldErrors()) {
-                errors.add(er.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<Map<String, String>> loginUser(@Valid @RequestBody UserInsertDTO loginDTO) {
 
        try {
            authManager.authenticate(

@@ -11,8 +11,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -46,15 +44,7 @@ public class BusinessRestController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> addBusinessToUser(@Valid @RequestBody BusinessInsertDTO dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError er : bindingResult.getFieldErrors()) {
-                errors.add(er.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<BusinessRoDTO> addBusinessToUser(@Valid @RequestBody BusinessInsertDTO dto) {
 
         try {
             Business business = businessService.insertBusinessToUser(dto);
@@ -73,15 +63,7 @@ public class BusinessRestController {
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<?> deleteBusinessFromUser(@Valid @RequestBody BusinessDeleteDTO dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError er : bindingResult.getFieldErrors()) {
-                errors.add(er.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<BusinessRoDTO> deleteBusinessFromUser(@Valid @RequestBody BusinessDeleteDTO dto) {
 
         try {
             Business business = businessService.removeBusinessFromUser(dto);
