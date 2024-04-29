@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products", indexes = @Index(columnList = "business"))
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -35,12 +35,4 @@ public class Product {
     @JoinColumn(name = "business_id", referencedColumnName = "id")
     private Business business;
 
-    public Product(Long id, String name, String category, String description, Float quantity, Float price) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.quantity = quantity;
-        this.price = price;
-    }
 }

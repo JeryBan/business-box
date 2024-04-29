@@ -7,11 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "businesses")
+@Table(name = "businesses", indexes = @Index(columnList = "user"))
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

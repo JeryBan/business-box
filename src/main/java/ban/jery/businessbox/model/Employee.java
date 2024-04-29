@@ -7,7 +7,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employees", indexes = @Index(columnList = "business"))
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
@@ -38,12 +38,4 @@ public class Employee {
     @JoinColumn(name = "business_id", referencedColumnName = "id")
     private Business business;
 
-    public Employee(Long id, String firstname, String lastname, String phoneNumber, String email, String filesPath) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.filesPath = filesPath;
-    }
 }

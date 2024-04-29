@@ -104,7 +104,7 @@ public class ProductServiceImpl implements IProductService {
         List<Product> products;
 
         try {
-            products = productRepo.findProductByNameStartingWith(name);
+            products = productRepo.findByNameStartingWith(name);
             if (products.isEmpty()) throw new EntityNotFoundException("No products found.");
 
             log.info("Product(s) found.");
