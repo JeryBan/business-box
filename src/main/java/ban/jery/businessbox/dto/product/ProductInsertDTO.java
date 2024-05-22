@@ -2,6 +2,7 @@ package ban.jery.businessbox.dto.product;
 
 import ban.jery.businessbox.model.Business;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,7 @@ public class ProductInsertDTO {
     private String description;
     private Float quantity;
     private Float price;
+
+    @NotNull
     private Business business;
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,6 +35,9 @@ public class Business {
 
     @OneToMany(mappedBy = "business")
     private Set<Product> products;
+
+    @OneToMany(mappedBy = "business")
+    private List<ChatEntry> chatHistory;
 
 
 
