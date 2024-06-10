@@ -4,12 +4,15 @@ import ban.jery.businessbox.dto.chat.ChatEntryInsertDTO;
 import ban.jery.businessbox.dto.chat.ChatEntryMapper;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.ChatEntry;
+import ban.jery.businessbox.model.User;
 import ban.jery.businessbox.repositories.BusinessRepository;
 import ban.jery.businessbox.repositories.ChatEntryRepository;
+import ban.jery.businessbox.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +22,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ChatServiceImpl implements IChatService {
 
-    private final ChatEntryRepository chatRepo;
+    private final UserRepository userRepo;
     private final BusinessRepository businessRepo;
+    private final ChatEntryRepository chatRepo;
 
     @Override
     public List<ChatEntry> getChat(Business business) throws Exception {
@@ -38,18 +42,25 @@ public class ChatServiceImpl implements IChatService {
     }
 
     @Override
+    @Transactional
     public ChatEntry insertChatEntry(ChatEntryInsertDTO dto) throws Exception {
 
         try {
+            User sender = userRepo.findById(dto.getSender().getId())
+                    .orElseThrow( () -> new EntityNotFoundException("Sender not found"));
+
             Business business = businessRepo.findById(dto.getBusiness().getId())
                     .orElseThrow( () -> new EntityNotFoundException("Business not found"));
 
-            ChatEntry chatEntry = ChatEntryMapper.mapToChatEntry(dto, business);
+            ChatEntry chatEntry = ChatEntryMapper.mapToChatEntry(dto, business, sender);
             chatEntry = chatRepo.save(chatEntry);
             log.info("Chat entry with id: " + chatEntry.getId() + " inserted successfully.");
 
             business.getChatHistory().add(chatEntry);
             log.info("Chat entry added to Business: " + business.getName());
+
+            sender.getChatEntryList().add(chatEntry);
+            log.info("Chat entry added to User: " + sender.getEmail());
 
             return chatEntry;
 
@@ -60,6 +71,7 @@ public class ChatServiceImpl implements IChatService {
     }
 
     @Override
+    @Transactional
     public ChatEntry deleteChatEntry(Long id) throws EntityNotFoundException {
         Business business;
 

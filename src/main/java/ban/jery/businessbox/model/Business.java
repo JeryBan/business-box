@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "businesses", indexes = @Index(columnList = "user"))
+@Table(name = "businesses", indexes = @Index(columnList = "user_id"))
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

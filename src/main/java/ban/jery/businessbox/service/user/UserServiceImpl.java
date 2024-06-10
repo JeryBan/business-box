@@ -6,7 +6,9 @@ import ban.jery.businessbox.model.User;
 import ban.jery.businessbox.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements IUserService {
 
+    @Autowired
     private final UserRepository userRepo;
+
 
     @Override
     public List<User> getAllUsers() {

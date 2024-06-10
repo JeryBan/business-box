@@ -21,8 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductServiceImpl implements IProductService {
 
-    private final ProductRepository productRepo;
     private final BusinessRepository businessRepo;
+    private final ProductRepository productRepo;
 
     @Override
     @Transactional

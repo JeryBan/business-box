@@ -8,7 +8,7 @@ import ban.jery.businessbox.model.Product;
 import ban.jery.businessbox.service.product.IProductService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/products")
 public class ProductRestController {
 
-    private final IProductService service;
+    private final IProductService productService;
+
+    @Autowired
+    public ProductRestController(IProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/{businessId}")
     public ResponseEntity<List<ProductRoDTO>> getAllProducts(@PathVariable("businessId") Long businessId){
@@ -31,7 +35,7 @@ public class ProductRestController {
         List<ProductRoDTO> roProducts = new ArrayList<>();
 
         try {
-            products = service.getAllProducts(businessId);
+            products = productService.getAllProducts(businessId);
             for (Product product : products) {
                 roProducts.add(ProductMapper.mapToRoProduct(product));
             }
@@ -49,7 +53,7 @@ public class ProductRestController {
         List<ProductRoDTO> roProducts = new ArrayList<>();
 
         try {
-            products = service.getProductByName(name);
+            products = productService.getProductByName(name);
             for (Product product : products) {
                 roProducts.add(ProductMapper.mapToRoProduct(product));
             }
@@ -65,7 +69,7 @@ public class ProductRestController {
     public ResponseEntity<ProductRoDTO> insertProductToBusiness(@Valid @RequestBody ProductInsertDTO dto) {
 
         try {
-            Product product = service.insertProductToBusiness(dto);
+            Product product = productService.insertProductToBusiness(dto);
             ProductRoDTO roProduct = ProductMapper.mapToRoProduct(product);
 
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -87,7 +91,7 @@ public class ProductRestController {
         }
 
         try {
-            Product product = service.updateProduct(dto);
+            Product product = productService.updateProduct(dto);
             ProductRoDTO roProduct = ProductMapper.mapToRoProduct(product);
 
             return ResponseEntity.ok(roProduct);
@@ -101,7 +105,7 @@ public class ProductRestController {
     public ResponseEntity<ProductRoDTO> deleteProduct(@PathVariable("id") Long id) {
 
         try {
-            Product product = service.deleteProduct(id);
+            Product product = productService.deleteProduct(id);
             ProductRoDTO roProduct = ProductMapper.mapToRoProduct(product);
 
             return ResponseEntity.ok(roProduct);

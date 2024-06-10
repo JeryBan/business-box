@@ -21,8 +21,9 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements IEmployeeService {
 
-    private final EmployeeRepository employeeRepo;
     private final BusinessRepository businessRepo;
+    private final EmployeeRepository employeeRepo;
+
 
     @Override
     @Transactional

@@ -9,6 +9,7 @@ import ban.jery.businessbox.service.user.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,20 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/users")
-@AllArgsConstructor
 public class UserRestController {
 
     private final IUserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserRestController(IUserService userService, JwtService jwtService, AuthenticationManager authManager, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.authManager = authManager;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<UserRoDTO>> getAllUsers() {

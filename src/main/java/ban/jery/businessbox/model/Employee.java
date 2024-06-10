@@ -7,7 +7,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-@Table(name = "employees", indexes = @Index(columnList = "business"))
+@Table(name = "employees", indexes = @Index(columnList = "business_id"))
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter

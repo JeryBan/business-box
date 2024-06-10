@@ -1,6 +1,7 @@
 package ban.jery.businessbox.dto.chat;
 
 import ban.jery.businessbox.model.Business;
+import ban.jery.businessbox.model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,4 +20,7 @@ public class ChatEntryInsertDTO {
 
     @NotNull
     private Business business;
+
+    @NotNull
+    private User sender;
 }

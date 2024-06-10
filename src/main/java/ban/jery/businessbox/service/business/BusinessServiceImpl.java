@@ -20,8 +20,8 @@ import java.util.*;
 @AllArgsConstructor
 public class BusinessServiceImpl implements IBusinessService {
 
-    private final BusinessRepository businessRepo;
     private final UserRepository userRepo;
+    private final BusinessRepository businessRepo;
 
     @Override
     @Transactional

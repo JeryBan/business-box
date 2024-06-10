@@ -1,0 +1,23 @@
+version: '2.24'
+
+services:
+  mysqldb:
+    image: mysql:latest
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqldb
+      MYSQL_DATABASE: businessBox
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  tomcat:
+    image: tomcat:11.0-jdk17
+    container_name: tomcat
+    depends_on:
+      - mysqldb
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webapps:/usr/local/tomcat/webapps
