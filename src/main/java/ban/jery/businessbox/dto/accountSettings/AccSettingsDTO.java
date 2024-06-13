@@ -13,12 +13,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AccSettingsUpdateDTO extends BaseDTO {
+public class AccSettingsDTO extends BaseDTO {
 
     @Enumerated(EnumType.STRING)
     private Theme theme;
 
-    private boolean isVisibleDashboard;
+    private boolean isChatVisible;
 
     private boolean notificationsEnabled;
 }

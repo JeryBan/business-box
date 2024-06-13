@@ -1,6 +1,7 @@
 package ban.jery.businessbox.controllers;
 
-import ban.jery.businessbox.dto.accountSettings.AccSettingsUpdateDTO;
+import ban.jery.businessbox.dto.accountSettings.AccSettingsDTO;
+import ban.jery.businessbox.dto.accountSettings.AccSettingsMapper;
 import ban.jery.businessbox.model.AccountSettings;
 import ban.jery.businessbox.service.accSettings.IAccSettingsService;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user/settings")
+@RequestMapping("/users/settings")
 public class AccSettingsRestController {
 
     private final IAccSettingsService accSettingsService;
@@ -18,12 +19,14 @@ public class AccSettingsRestController {
         this.accSettingsService = accSettingsService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<AccountSettings> getAccSettings(@PathVariable("userId") Long userId) {
-        AccountSettings accountSettings;
+    @GetMapping("/{email}")
+    public ResponseEntity<AccSettingsDTO> getAccSettings(@PathVariable("email") String email) {
+        AccSettingsDTO accountSettings;
 
         try {
-            accountSettings = accSettingsService.getAccSettings(userId);
+            accountSettings = AccSettingsMapper.mapToAccSettingsDTO(
+                    accSettingsService.getAccSettings(email)
+            );
             return ResponseEntity.ok(accountSettings);
 
         } catch (EntityNotFoundException e) {
@@ -31,13 +34,15 @@ public class AccSettingsRestController {
         }
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<AccountSettings> updateAccSettings(@PathVariable("userId") Long userId,
-                                                             @RequestBody AccSettingsUpdateDTO dto) {
-        AccountSettings accountSettings;
+    @PutMapping("/{email}")
+    public ResponseEntity<AccSettingsDTO> updateAccSettings(@PathVariable("email") String email,
+                                                             @RequestBody AccSettingsDTO dto) {
+        AccSettingsDTO accountSettings;
 
         try {
-            accountSettings = accSettingsService.updateSettings(userId, dto);
+            accountSettings = AccSettingsMapper.mapToAccSettingsDTO(
+                    accSettingsService.updateSettings(email, dto)
+            );
             return ResponseEntity.ok(accountSettings);
 
         } catch (EntityNotFoundException e) {

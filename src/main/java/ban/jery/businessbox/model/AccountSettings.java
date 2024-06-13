@@ -28,8 +28,9 @@ public class AccountSettings {
     @Enumerated(EnumType.STRING)
     private Theme theme = Theme.LIGHT;
 
-    private boolean isVisibleDashboard = true;
+    @Column()
+    private boolean isChatVisible = true;
 
-    private boolean notificationsEnabled = true;
+    private boolean notificationsEnabled = false;
 
 }

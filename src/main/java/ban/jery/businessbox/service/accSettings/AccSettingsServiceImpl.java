@@ -1,6 +1,6 @@
 package ban.jery.businessbox.service.accSettings;
 
-import ban.jery.businessbox.dto.accountSettings.AccSettingsUpdateDTO;
+import ban.jery.businessbox.dto.accountSettings.AccSettingsDTO;
 import ban.jery.businessbox.model.AccountSettings;
 import ban.jery.businessbox.model.User;
 import ban.jery.businessbox.repositories.AccSettingsRepository;
@@ -19,9 +19,9 @@ public class AccSettingsServiceImpl implements IAccSettingsService {
     private final AccSettingsRepository accSettingsRepo;
 
     @Override
-    public AccountSettings getAccSettings(Long userId) throws EntityNotFoundException {
+    public AccountSettings getAccSettings(String email) throws EntityNotFoundException {
         try {
-           return accSettingsRepo.findByUserId(userId);
+           return accSettingsRepo.findByUserEmail(email);
 
         } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
@@ -30,15 +30,15 @@ public class AccSettingsServiceImpl implements IAccSettingsService {
     }
 
     @Override
-    public AccountSettings updateSettings(Long userId, AccSettingsUpdateDTO dto) throws EntityNotFoundException {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
+    public AccountSettings updateSettings(String email, AccSettingsDTO dto) throws EntityNotFoundException {
+        User user = userRepo.findUserByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        AccountSettings settings = accSettingsRepo.findByUserId(userId);
+        AccountSettings settings = accSettingsRepo.findByUserEmail(email);
 
         settings.setUser(user);
         settings.setTheme(dto.getTheme());
-        settings.setVisibleDashboard(dto.isVisibleDashboard());
+        settings.setChatVisible(dto.isChatVisible());
         settings.setNotificationsEnabled(dto.isNotificationsEnabled());
 
         return accSettingsRepo.save(settings);
