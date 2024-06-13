@@ -46,6 +46,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "sender")
     private List<ChatEntry> chatEntryList;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private AccountSettings accountSettings;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null; // List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

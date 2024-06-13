@@ -13,8 +13,8 @@ public class ChatEntryMapper {
         return new ChatEntry(null, dto.getBody(), null, business, sender);
     }
 
-    public static ChatEntryRoDTO mapToRoChatEntry(ChatEntry chatEntry) {
-        return new ChatEntryRoDTO(chatEntry.getId() ,chatEntry.getBody(), chatEntry.getBusiness());
+    public static ChatEntryRoDTO mapToRoChatEntry(ChatEntryInsertDTO dto) {
+        return new ChatEntryRoDTO(dto.getBody(), dto.getBusiness());
     }
 
 

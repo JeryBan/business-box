@@ -1,6 +1,7 @@
 package ban.jery.businessbox.dto.user;
 
 import ban.jery.businessbox.dto.BaseDTO;
+import ban.jery.businessbox.model.AccountSettings;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.ChatEntry;
 import jakarta.validation.constraints.Email;
@@ -30,11 +31,15 @@ public class UserRoDTO extends BaseDTO {
 
     private List<ChatEntry> chatEntryList;
 
-    public UserRoDTO(Long id, String email, String password, Set<Business> businesses, List<ChatEntry> chatEntryList) {
+    private AccountSettings accountSettings;
+
+    public UserRoDTO(Long id, String email, String password, Set<Business> businesses,
+                     List<ChatEntry> chatEntryList, AccountSettings accountSettings) {
         this.email = email;
         this.password = password;
         this.businesses = businesses;
         this.chatEntryList = chatEntryList;
+        this.accountSettings = accountSettings;
         setId(id);
     }
 }

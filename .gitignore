@@ -38,4 +38,4 @@ out/
 .vscode/
 
 ### Docker volumes
-volumes/
+volumes/mysql/*

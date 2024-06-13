@@ -63,7 +63,7 @@ public class ProductServiceImpl implements IProductService {
                 throw new EntityNotFoundException("Business mismatch for employee - id: " + dto.getId());
             }
 
-           business.getProducts().remove(oldProduct);
+            business.getProducts().remove(oldProduct);
             newProduct = productRepo.save(ProductMapper.mapToProduct(dto));
             business.getProducts().add(newProduct);
 

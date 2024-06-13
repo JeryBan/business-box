@@ -1,6 +1,9 @@
 package ban.jery.businessbox.config;
 
 import ban.jery.businessbox.repositories.*;
+import ban.jery.businessbox.security.JwtService;
+import ban.jery.businessbox.service.accSettings.AccSettingsServiceImpl;
+import ban.jery.businessbox.service.accSettings.IAccSettingsService;
 import ban.jery.businessbox.service.business.BusinessServiceImpl;
 import ban.jery.businessbox.service.business.IBusinessService;
 import ban.jery.businessbox.service.chat.ChatServiceImpl;
@@ -40,6 +43,11 @@ public class ServiceConfig {
     @Bean
     public IChatService chatService(UserRepository userRepository, BusinessRepository businessRepository, ChatEntryRepository chatEntryRepository) {
         return new ChatServiceImpl(userRepository, businessRepository, chatEntryRepository);
+    }
+
+    @Bean
+    public IAccSettingsService accSettingsService(UserRepository userRepository, AccSettingsRepository accSettingsRepository) {
+        return new AccSettingsServiceImpl(userRepository, accSettingsRepository);
     }
 
 }

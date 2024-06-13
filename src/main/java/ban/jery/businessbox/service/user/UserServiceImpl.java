@@ -1,8 +1,11 @@
 package ban.jery.businessbox.service.user;
 
+import ban.jery.businessbox.dto.accountSettings.AccSettingsUpdateDTO;
 import ban.jery.businessbox.dto.user.UserInsertDTO;
 import ban.jery.businessbox.dto.user.UserMapper;
+import ban.jery.businessbox.model.AccountSettings;
 import ban.jery.businessbox.model.User;
+import ban.jery.businessbox.repositories.AccSettingsRepository;
 import ban.jery.businessbox.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -24,7 +27,6 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private final UserRepository userRepo;
-
 
     @Override
     public List<User> getAllUsers() {
@@ -99,6 +101,5 @@ public class UserServiceImpl implements IUserService {
         }
         return user.orElseThrow();
     }
-
 
 }

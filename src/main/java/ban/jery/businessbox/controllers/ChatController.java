@@ -1,6 +1,8 @@
 package ban.jery.businessbox.controllers;
 
 import ban.jery.businessbox.dto.chat.ChatEntryInsertDTO;
+import ban.jery.businessbox.dto.chat.ChatEntryMapper;
+import ban.jery.businessbox.dto.chat.ChatEntryRoDTO;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.ChatEntry;
 import ban.jery.businessbox.service.chat.IChatService;
@@ -9,24 +11,26 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 @Controller
-public class ChatRestController {
+public class ChatController {
 
 
     private final IChatService chatService;
 
     @Autowired
-    public ChatRestController(IChatService chatService) {
+    public ChatController(IChatService chatService) {
         this.chatService = chatService;
     }
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
-    public ChatEntry sendMessage(@Payload ChatEntryInsertDTO dto) throws Exception {
-        return chatService.insertChatEntry(dto);
+    public ChatEntryRoDTO sendMessage(@Payload ChatEntryInsertDTO dto) throws Exception {
+        chatService.insertChatEntry(dto);
+        return ChatEntryMapper.mapToRoChatEntry(dto);
     }
 
     @MessageMapping("/chat/getChat")

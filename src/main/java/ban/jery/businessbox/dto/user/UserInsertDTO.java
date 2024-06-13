@@ -19,4 +19,5 @@ public class UserInsertDTO {
 
     @NotBlank(message = "password is required.")
     private String password;
+
 }
