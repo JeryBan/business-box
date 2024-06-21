@@ -1,6 +1,6 @@
 package ban.jery.businessbox.service.chat;
 
-import ban.jery.businessbox.dto.chat.ChatEntryInsertDTO;
+import ban.jery.businessbox.dto.chat.ChatEntryDTO;
 import ban.jery.businessbox.dto.chat.ChatEntryMapper;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.model.ChatEntry;
@@ -27,40 +27,47 @@ public class ChatServiceImpl implements IChatService {
     private final ChatEntryRepository chatRepo;
 
     @Override
-    public List<ChatEntry> getChat(Business business) throws Exception {
-        List<ChatEntry> chat = new ArrayList<>();
+    public List<ChatEntryDTO> retrieveChatHistory(String email) throws EntityNotFoundException {
+        List<ChatEntry> chatEntries = new ArrayList<>();
+        List<ChatEntryDTO> chatHistory = new ArrayList<>();
+
+        User sender = userRepo.findUserByEmail(email)
+                .orElseThrow( () -> new EntityNotFoundException("User not found"));
 
         try {
-            chat = chatRepo.findAllByBusiness(business);
+            chatEntries = chatRepo.findAllBySender(sender);
             log.info("Chat retrieved successfully.");
 
-        } catch (Exception e) {
+            for (ChatEntry chatEntry : chatEntries) {
+                chatHistory.add(
+                        ChatEntryMapper.mapToChatDTO(chatEntry)
+                );
+            }
+
+        } catch (EntityNotFoundException e) {
             log.error(e.getMessage());
             throw e;
         }
-        return chat;
+        return chatHistory;
     }
 
     @Override
     @Transactional
-    public ChatEntry insertChatEntry(ChatEntryInsertDTO dto) throws Exception {
+    public ChatEntry insertChatEntry(ChatEntryDTO dto) throws Exception {
 
         try {
-            User sender = userRepo.findById(dto.getSender().getId())
+            User sender = userRepo.findUserByEmail(dto.getSender())
                     .orElseThrow( () -> new EntityNotFoundException("Sender not found"));
 
-            Business business = businessRepo.findById(dto.getBusiness().getId())
-                    .orElseThrow( () -> new EntityNotFoundException("Business not found"));
+            Business business = businessRepo.findBusinessByNameAndAndUserId(dto.getBusinessName(), sender.getId());
 
             ChatEntry chatEntry = ChatEntryMapper.mapToChatEntry(dto, business, sender);
             chatEntry = chatRepo.save(chatEntry);
             log.info("Chat entry with id: " + chatEntry.getId() + " inserted successfully.");
 
             business.getChatHistory().add(chatEntry);
-            log.info("Chat entry added to Business: " + business.getName());
-
             sender.getChatEntryList().add(chatEntry);
-            log.info("Chat entry added to User: " + sender.getEmail());
+            log.info("Chat entry added to User: " + sender.getEmail() + " for bussiness " + business.getName());
 
             return chatEntry;
 

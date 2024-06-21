@@ -11,4 +11,6 @@ import java.util.List;
 public interface BusinessRepository extends JpaRepository<Business, Long> {
 
     List<Business> findAllByUser(User user);
+
+    Business findBusinessByNameAndAndUserId(String name, Long id);
 }

@@ -9,13 +9,19 @@ import lombok.experimental.UtilityClass;
 public class ChatEntryMapper {
 
 
-    public static ChatEntry mapToChatEntry(ChatEntryInsertDTO dto, Business business, User sender) {
+    public static ChatEntry mapToChatEntry(ChatEntryDTO dto, Business business, User sender) {
         return new ChatEntry(null, dto.getBody(), null, business, sender);
     }
 
-    public static ChatEntryRoDTO mapToRoChatEntry(ChatEntryInsertDTO dto) {
-        return new ChatEntryRoDTO(dto.getBody(), dto.getBusiness());
+    public static ChatEntryDTO mapToChatDTO(ChatEntry chatEntry) {
+        return new ChatEntryDTO(
+                chatEntry.getBody(),
+                chatEntry.getBusiness().getName(),
+                chatEntry.getSender().getEmail(),
+                chatEntry.getCreatedAt().toString()
+        );
     }
+
 
 
 }
