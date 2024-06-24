@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/inventory/product-table/product-table.component.css"],
+  "sourcesContent": [".card {\n    min-height: 30vh;\n}\n\n.table-responsive {\n    overflow: visible !important;\n}\n\n.fa-trash-can:hover {\n    color: red\n}\n\n.dropdown-item:hover {\n    background-color: lightgrey;\n}\n\n.dropdown-menu {\n    border: 2px solid var(--navy-green);\n    max-height: 13vh;\n    overflow: auto;\n}\n\ninput {\n    outline: none;\n    border: none;\n}"],
+  "mappings": ";AAAA,CAAC;AACG,cAAY;AAChB;AAEA,CAAC;AACG,YAAU;AACd;AAEA,CAAC,YAAY;AACT,SAAO;AACX;AAEA,CAAC,aAAa;AACV,oBAAkB;AACtB;AAEA,CAAC;AACG,UAAQ,IAAI,MAAM,IAAI;AACtB,cAAY;AACZ,YAAU;AACd;AAEA;AACI,WAAS;AACT,UAAQ;AACZ;",
+  "names": []
+}

@@ -8,7 +8,6 @@ import ban.jery.businessbox.security.JwtService;
 import ban.jery.businessbox.service.user.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

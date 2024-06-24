@@ -10,14 +10,17 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @EnableWebSecurity
+@EnableWebMvc
 @Configuration
 @AllArgsConstructor
 public class SecurityConfig {
@@ -29,8 +32,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:4200", "ws://localhost:4200",
-                                         "https://localhost:4200", "wss://localhost:4200")); // "https://accounts.google.com/o/oauth2/auth"
+        config.setAllowedOrigins(List.of(
+                                         "http://localhost:4200", "ws://localhost:4200",
+                                         "http://nginx:80", "ws://nginx:80",
+                                         "http://localhost", "ws://localhost",
+                                         "http://localhost:80", "ws://localhost:80"
+
+        ));
         config.setAllowedMethods(List.of("*"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
@@ -40,6 +48,7 @@ public class SecurityConfig {
 
         return source;
     }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

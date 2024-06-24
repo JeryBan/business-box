@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/employees/insert-employee/insert-employee.component.css"],
+  "sourcesContent": [".card {\n    border: none;\n    width: 100%;\n    height: 100%;\n}\n\n.hidden {\n    visibility: hidden;\n}\n"],
+  "mappings": ";AAAA,CAAC;AACG,UAAQ;AACR,SAAO;AACP,UAAQ;AACZ;AAEA,CAAC;AACG,cAAY;AAChB;",
+  "names": []
+}

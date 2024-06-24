@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/navigation/navigation.component.css"],
+  "sourcesContent": ["li {\n    margin-bottom: 0.9rem;\n    padding: 0;\n}\n\nheader {\n    width: 100%;\n    color: white;\n    background-color: var(--header-color);\n}\n\nnav {\n    width: 10%;\n    height: 95vh;\n    color: white;\n    background-color: var(--header-color);\n}\n\nnav span {\n    padding-left: 0.7rem;\n    font-size: 15px;\n    color: var(--navy-green);\n}\n\n.business{\n    padding-left: 0;\n    background-color: #3E5871;\n}\n\n.business-input {\n    color: white;\n    background-color: #3E5871;\n    outline: none;\n    border: none;\n}\n\n.btn {color: white;}\n.btn:hover {color: var(--navy-green);}\n\n.main {\n    background-color: #E9E9E9;\n    width: 100%;\n}\n\n"],
+  "mappings": ";AAAA;AACI,iBAAe;AACf,WAAS;AACb;AAEA;AACI,SAAO;AACP,SAAO;AACP,oBAAkB,IAAI;AAC1B;AAEA;AACI,SAAO;AACP,UAAQ;AACR,SAAO;AACP,oBAAkB,IAAI;AAC1B;AAEA,IAAI;AACA,gBAAc;AACd,aAAW;AACX,SAAO,IAAI;AACf;AAEA,CAAC;AACG,gBAAc;AACd,oBAAkB;AACtB;AAEA,CAAC;AACG,SAAO;AACP,oBAAkB;AAClB,WAAS;AACT,UAAQ;AACZ;AAEA,CAAC;AAAK,SAAO;AAAM;AACnB,CADC,GACG;AAAQ,SAAO,IAAI;AAAc;AAErC,CAAC;AACG,oBAAkB;AAClB,SAAO;AACX;",
+  "names": []
+}
