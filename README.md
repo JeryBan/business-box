@@ -1,4 +1,15 @@
-## Todo
+# Business Box
+
+---
+
+## Installation
+To start the app just run:
+```bash
+docker compose up
+```
+at the top level of the project, and visit http://localhost in your browser.
+
+## Feature Release
 
 * enable notifications
 * implement account settings
