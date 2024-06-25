@@ -7,14 +7,14 @@ COPY ./gradle /app/gradle
 
 VOLUME /app/src
 
-RUN gradle clean build --no-daemon
+RUN gradle clean bootJar --no-daemon
 
 
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
