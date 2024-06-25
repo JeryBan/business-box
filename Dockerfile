@@ -5,7 +5,9 @@ WORKDIR /app
 COPY build.gradle settings.gradle /app/
 COPY ./gradle /app/gradle
 
-VOLUME /app/src
+RUN mkdir -p /app/src
+
+COPY ./src /app/src
 
 RUN gradle clean bootJar --no-daemon
 
