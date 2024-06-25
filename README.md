@@ -3,8 +3,9 @@
 ---
 
 ## Installation
-To start the app just run:
+To start the app run:
 ```bash
+docker compose build
 docker compose up
 ```
 at the top level of the project, and visit http://localhost in your browser.

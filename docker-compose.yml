@@ -23,6 +23,8 @@ services:
     ports:
       - "8080:8080"
     restart: always
+    volumes:
+      - ./volumes/tomcat-logs:/tmp
     networks:
       - app_network
 
@@ -41,6 +43,7 @@ services:
 
 volumes:
   mysqldb-data:
+  tomcat-logs:
   nginx-logs:
 
 networks:

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/user-settings/user-settings.component.css"],
-  "sourcesContent": [".table-container {\n    margin-top: 0.6rem;\n    margin-left: auto;\n    margin-right: auto;\n    width: 95%;\n    height: 70vh;\n    overflow: auto;\n    border-radius: 0;\n    border-top: 3px solid var(--navy-green);\n}\n\n.btn-apply {\n    width: 95%;\n    margin-top: 2rem;\n}\n\n.hidden {\n    visibility: hidden;\n}\n\n.fa-check {\n    color: var(--navy-green);\n}\n\n"],
-  "mappings": ";AAAA,CAAC;AACG,cAAY;AACZ,eAAa;AACb,gBAAc;AACd,SAAO;AACP,UAAQ;AACR,YAAU;AACV,iBAAe;AACf,cAAY,IAAI,MAAM,IAAI;AAC9B;AAEA,CAAC;AACG,SAAO;AACP,cAAY;AAChB;AAEA,CAAC;AACG,cAAY;AAChB;AAEA,CAAC;AACG,SAAO,IAAI;AACf;",
-  "names": []
-}

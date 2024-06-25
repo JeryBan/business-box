@@ -116,6 +116,7 @@ public class UserRestController {
 
            return ResponseEntity.ok(Collections.singletonMap("access_token", jwtToken));
 
+
        } catch (AuthenticationException e) {
            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
        } catch (Exception e) {

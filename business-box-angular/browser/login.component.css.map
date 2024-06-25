@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/login/login.component.css"],
-  "sourcesContent": ["\n.welcome-note {\n    color: rgba(255, 255, 255, 0.70);\n}\n\n.seperator {\n    width: 2px;\n    height: 45vh;\n    background-color: rgba(255, 255, 255, 0.344);\n}\n\n.login-wrapper {\n    background-image: url('../../../assets/images/login-bg.jpg');\n    background-position: center;\n    background-size: cover;\n    height: 100vh;\n}\n\n\n.fa-users {\n    color: rgba(255, 255, 255, 0.623);\n    font-size: 3rem;\n}\n\n.card {\n    border: hidden;\n    background-color: rgba(255, 255, 255, 0);\n}\n\ninput {\n    background-color: rgba(255, 255, 255, 0.664);\n    padding: 1rem;\n}\n\ninput:focus {\n    background-color: rgba(255, 255, 255, 0.7);\n}\n\n.btn {\n    background-color: rgba(38, 139, 62, 0.8); /* Adjust the RGB values and alpha (transparency) as needed */\n    padding-left: 3rem;\n    padding-right: 3rem;\n    \n      \n}"],
-  "mappings": ";AACA,CAAC;AACG,SAAO,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AAC/B;AAEA,CAAC;AACG,SAAO;AACP,UAAQ;AACR,oBAAkB,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AAC1C;AAEA,CAAC;AACG,oBAAkB;AAClB,uBAAqB;AACrB,mBAAiB;AACjB,UAAQ;AACZ;AAGA,CAAC;AACG,SAAO,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AAC3B,aAAW;AACf;AAEA,CAAC;AACG,UAAQ;AACR,oBAAkB,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AAC1C;AAEA;AACI,oBAAkB,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACtC,WAAS;AACb;AAEA,KAAK;AACD,oBAAkB,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AAC1C;AAEA,CAAC;AACG,oBAAkB,KAAK,EAAE,EAAE,GAAG,EAAE,EAAE,EAAE;AACpC,gBAAc;AACd,iBAAe;AAGnB;",
-  "names": []
-}

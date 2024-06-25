@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/employees/employees.component.css"],
-  "sourcesContent": [".table-container {\n    margin-top: 3rem;\n    margin-left: auto;\n    margin-right: auto;\n    width: 95%;\n    height: 65vh;\n    overflow: auto;\n    border-radius: 0;\n    border-top: 3px solid var(--navy-green);\n}\n\n.fa-trash-can:hover {\n    color: red\n}\n\n.add:hover, .fa-pen:hover {\n    color: var(--navy-green);\n}\n\n.modal-content {\n    border: 4px solid var(--navy-green);\n    width: 130%;\n    height: 43vh;\n    overflow: auto;\n}\n\n"],
-  "mappings": ";AAAA,CAAC;AACG,cAAY;AACZ,eAAa;AACb,gBAAc;AACd,SAAO;AACP,UAAQ;AACR,YAAU;AACV,iBAAe;AACf,cAAY,IAAI,MAAM,IAAI;AAC9B;AAEA,CAAC,YAAY;AACT,SAAO;AACX;AAEA,CAAC,GAAG;AAAQ,CAAC,MAAM;AACf,SAAO,IAAI;AACf;AAEA,CAAC;AACG,UAAQ,IAAI,MAAM,IAAI;AACtB,SAAO;AACP,UAAQ;AACR,YAAU;AACd;",
-  "names": []
-}

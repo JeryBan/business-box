@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/inventory/inventory.component.css"],
-  "sourcesContent": [".card-container {\n    margin-top: 3rem;\n    margin-left: auto;\n    margin-right: auto;    \n    border-radius: 0;\n}\n\n.card-body {\n    border-top: 3px solid var(--navy-green);\n    height: 65vh;\n    overflow: hidden;\n}\n\n.category-title {\n    background-color: var(--navy-green);\n    width: 50%;\n}\n\n.nav-link {\n    color: var(--navy-green);\n}\n\n.nav-link:focus {\n    background-color: var(--navy-green);\n    color: white;\n}\n\n.nav-link.active {\n    background-color: var(--navy-green);\n    color: white;\n}\n\n.tab-content {\n    overflow-y: auto;\n}\n\n\n.add:hover, .add:focus {\n    color: var(--navy-green);\n    outline: none;\n}\n\ninput {\n    outline: none;\n    border-radius: 5px;\n    border: 1px solid var(--navy-green);\n}\ninput:focus {\n    outline: none;\n    border-radius: 5px;\n    border: 2px solid var(--navy-green);\n    \n}\n"],
-  "mappings": ";AAAA,CAAC;AACG,cAAY;AACZ,eAAa;AACb,gBAAc;AACd,iBAAe;AACnB;AAEA,CAAC;AACG,cAAY,IAAI,MAAM,IAAI;AAC1B,UAAQ;AACR,YAAU;AACd;AAEA,CAAC;AACG,oBAAkB,IAAI;AACtB,SAAO;AACX;AAEA,CAAC;AACG,SAAO,IAAI;AACf;AAEA,CAJC,QAIQ;AACL,oBAAkB,IAAI;AACtB,SAAO;AACX;AAEA,CATC,QASQ,CAAC;AACN,oBAAkB,IAAI;AACtB,SAAO;AACX;AAEA,CAAC;AACG,cAAY;AAChB;AAGA,CAAC,GAAG;AAAQ,CAAX,GAAe;AACZ,SAAO,IAAI;AACX,WAAS;AACb;AAEA;AACI,WAAS;AACT,iBAAe;AACf,UAAQ,IAAI,MAAM,IAAI;AAC1B;AACA,KAAK;AACD,WAAS;AACT,iBAAe;AACf,UAAQ,IAAI,MAAM,IAAI;AAE1B;",
-  "names": []
-}
