@@ -6,6 +6,7 @@ import ban.jery.businessbox.dto.user.UserRoDTO;
 import ban.jery.businessbox.model.User;
 import ban.jery.businessbox.security.JwtService;
 import ban.jery.businessbox.service.user.IUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class UserRestController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/")
     public ResponseEntity<List<UserRoDTO>> getAllUsers() {
         List<User> users;
@@ -55,6 +57,7 @@ public class UserRestController {
         }
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{email}")
     public ResponseEntity<Map<String, String>> findUserByEmail(@PathVariable("email") String email) {
         UserRoDTO roUser;
@@ -72,7 +75,7 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }
     }
-
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
 

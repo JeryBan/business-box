@@ -6,6 +6,7 @@ import ban.jery.businessbox.dto.business.BusinessMapper;
 import ban.jery.businessbox.dto.business.BusinessRoDTO;
 import ban.jery.businessbox.model.Business;
 import ban.jery.businessbox.service.business.IBusinessService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/business")
 public class BusinessRestController {

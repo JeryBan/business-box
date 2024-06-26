@@ -3,11 +3,12 @@ package ban.jery.businessbox.controllers;
 import ban.jery.businessbox.dto.accountSettings.AccSettingsDTO;
 import ban.jery.businessbox.dto.accountSettings.AccSettingsMapper;
 import ban.jery.businessbox.service.accSettings.IAccSettingsService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/users/settings")
 public class AccSettingsRestController {

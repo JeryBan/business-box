@@ -6,6 +6,7 @@ import ban.jery.businessbox.dto.product.ProductRoDTO;
 import ban.jery.businessbox.dto.product.ProductUpdateDTO;
 import ban.jery.businessbox.model.Product;
 import ban.jery.businessbox.service.product.IProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/products")
 public class ProductRestController {

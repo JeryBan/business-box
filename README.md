@@ -10,13 +10,16 @@ docker compose up
 ```
 at the top level of the project, and visit http://localhost in your browser.
 
+## OpenApi Documentation
+Visit http://localhost:8080/business-box/swagger-ui/index.html
+
 ## Feature Release
 
 * enable notifications
-* implement account settings
+* implement more account settings
 * add dark theme
 * optimize websocket communication
 * tablet responsive
-* remember me button
+* 'remember me' button
 * upload file function for employees
 * documentation

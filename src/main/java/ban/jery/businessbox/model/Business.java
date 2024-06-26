@@ -39,6 +39,4 @@ public class Business {
     @OneToMany(mappedBy = "business")
     private List<ChatEntry> chatHistory;
 
-
-
 }

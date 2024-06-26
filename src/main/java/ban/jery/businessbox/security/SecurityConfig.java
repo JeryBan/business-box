@@ -34,9 +34,7 @@ public class SecurityConfig {
 
         config.setAllowedOrigins(List.of(
                                          "http://localhost:4200", "ws://localhost:4200",
-                                         "http://nginx:80", "ws://nginx:80",
-                                         "http://localhost", "ws://localhost",
-                                         "http://localhost:80", "ws://localhost:80"
+                                         "http://localhost", "ws://localhost"
 
         ));
         config.setAllowedMethods(List.of("*"));
@@ -58,7 +56,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/users/login", "/users/register", "/chat").permitAll()
+                        .requestMatchers("/users/login", "/users/register", "/chat",
+                                        "/swagger-ui/**", "/v3/**").permitAll()
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

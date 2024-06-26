@@ -2,6 +2,7 @@ package ban.jery.businessbox.controllers;
 
 import ban.jery.businessbox.dto.chat.ChatEntryDTO;
 import ban.jery.businessbox.service.chat.IChatService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/chat")
 public class ChatRestController {

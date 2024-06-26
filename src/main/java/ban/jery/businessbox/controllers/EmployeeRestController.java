@@ -3,6 +3,7 @@ package ban.jery.businessbox.controllers;
 import ban.jery.businessbox.dto.employee.*;
 import ban.jery.businessbox.model.Employee;
 import ban.jery.businessbox.service.employee.IEmployeeService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.*;
 
-
+@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/employees")
 public class EmployeeRestController {
